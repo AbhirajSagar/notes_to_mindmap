@@ -16,7 +16,6 @@ export default function Home()
     setLoading(true);
     const text = await extractTextFromPdf(file);
     setNotes(text);
-    // setFile(null);
     await handleGenerate();
     setLoading(false);
   };
@@ -74,14 +73,14 @@ export default function Home()
           className="hidden"
           id="pdf-upload"
         />
-        {!file && (<label htmlFor="pdf-upload" className="bg-indigo-600 hover:bg-indigo-700 text-white cursor-pointer font-semibold py-2 px-6 rounded-l-xl transition-colors duration-300 flex items-center">
+        {!file && (<label htmlFor="pdf-upload" className="bg-indigo-600 hover:bg-indigo-700 text-white cursor-pointer font-semibold py-2 px-6 rounded-xl transition-colors duration-300 flex items-center">
           <FiFilePlus className="inline-block mr-2 text-lg" />
           Upload PDF
         </label>)}
 
         <button
           onClick={file ? handlePdfUpload : handleGenerate}
-          className={`bg-indigo-600 hover:bg-indigo-700 text-white cursor-pointer font-semibold py-2 px-6 ${file ? 'rounded-xl' : 'rounded-r-xl'} transition-colors duration-300 flex items-center`}
+          className={`bg-indigo-600 hover:bg-indigo-700 text-white cursor-pointer font-semibold py-2 px-6 rounded-xl transition-colors duration-300 flex items-center`}
         >
           <FiMap className="inline-block mr-2 text-lg" />
           {loading ? "Processing..." : "Generate Mindmap"}

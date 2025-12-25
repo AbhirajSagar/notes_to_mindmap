@@ -3,7 +3,7 @@ import { useCallback, useEffect } from 'react'
 import { ReactFlow, addEdge, Controls, Background, useNodesState, useEdgesState } from '@xyflow/react'
 import '@xyflow/react/dist/style.css'
 
-const initialNodes = 
+const initialNodes =
 [
   { id: '1', position: { x: 0, y: 50 }, data: { label: 'Start' } },
   { id: '2', position: { x: 200, y: 50 }, data: { label: 'Middle' } },
