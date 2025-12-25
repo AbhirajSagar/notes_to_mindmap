@@ -17,7 +17,11 @@ export function Header()
   useEffect(() => {
     const unsubscribe = onAuthStateChanged(auth, (u) => {
       if (u) setUser({ displayName: u.displayName || "User" });
-      else setUser(null);
+      else 
+      {
+        setUser(null);
+        setIsModalOpen(true);
+      }
     });
     return () => unsubscribe();
   }, []);
@@ -44,7 +48,7 @@ export function Header()
           </div>
         </div>
       </header>
-      {user ? <UserModal isOpen={isModalOpen} onClose={() => setIsModalOpen(false)} user={user} onLogout={handleLogout} /> : <LoginModal isOpen={isModalOpen} onClose={() => setIsModalOpen(false)} />}
+      {user ? <UserModal isOpen={isModalOpen} onClose={() => setIsModalOpen(false)} user={user} onLogout={handleLogout} /> : <LoginModal isOpen={isModalOpen} onClose={() => {}} />}
     </>
   );
 }
@@ -82,10 +86,7 @@ function LoginModal({ isOpen, onClose })
   return (
     <Modal isOpen={isOpen} onClose={onClose}>
       <div className="w-full flex justify-between items-center">
-        <h2 className="text-xl font-bold text-white h-full">LOGIN</h2>
-        <button className="h-full bg-gray-800 p-2 rounded text-white flex justify-center items-center gap-1 cursor-pointer hover:bg-gray-700 transition-colors duration-300" onClick={onClose}>
-          <FiX className="text-2xl" />
-        </button>
+        <h2 className="text-xl font-bold text-center w-full text-white h-full">LOGIN TO USE</h2>
       </div>
       <LoginWithGoogle />
     </Modal>

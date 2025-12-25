@@ -9,7 +9,8 @@ export default function Home()
   const [notes, setNotes] = useState("");
   const [file, setFile] = useState(null);
   const [loading, setLoading] = useState(false);
-  const Router = useRouter();  
+  const Router = useRouter();
+
   const handlePdfUpload = async () =>
   {
     if (!file) return;
@@ -36,7 +37,7 @@ export default function Home()
     console.log("Mindmap data:", data);
     sessionStorage.setItem("mindmapData", JSON.stringify(data));
     setLoading(false);
-    Router.push("/map");  
+    Router.push("/map");
   };
 
   return (
