@@ -1,37 +1,8 @@
-"use client";
-import { useState, useEffect } from "react";
-import { FiFileText, FiLogOut, FiUser } from "react-icons/fi";
-import Modal from "./Modal";
-import { FiX } from "react-icons/fi";
-import { FiMap } from "react-icons/fi";
-import { FiDollarSign } from "react-icons/fi";
-import LoginWithGoogle from "./LoginWithGoogle";
-import { auth } from "../firebase/firebase";
-import { onAuthStateChanged, signOut } from "firebase/auth";
+'use client';
+import { FiFileText } from "react-icons/fi";
 
 export function Header() 
 {
-  const [isModalOpen, setIsModalOpen] = useState(false);
-  const [user, setUser] = useState(null);
-
-  useEffect(() => {
-    const unsubscribe = onAuthStateChanged(auth, (u) => {
-      if (u) setUser({ displayName: u.displayName || "User" });
-      else 
-      {
-        setUser(null);
-        setIsModalOpen(true);
-      }
-    });
-    return () => unsubscribe();
-  }, []);
-
-  const handleLogout = async () => 
-  {
-    await signOut(auth);
-    setIsModalOpen(false);
-  };
-
   return (
     <>
       <header className="bg-gray-900 text-white p-2 shadow-md transition-colors duration-300">
@@ -40,56 +11,9 @@ export function Header()
             <FiFileText className="text-3xl text-white mr-2" />
             <h1 className="text-2xl font-bold">Notes To Mindmap</h1>
           </div>
-          <div className='items-center hidden md:flex bg-gray-800 py-2 px-3 rounded-xl shadow-2xl drop-shadow-gray-800 cursor-pointer hover:bg-gray-700 transition-colors duration-300' onClick={() => setIsModalOpen(true)}>
-            <FiUser className="text-3xl text-white mr-2" />
-            <div className="text-lg font-medium">
-              {user ? user.displayName : "Login"}
-            </div>
-          </div>
         </div>
       </header>
-      {user ? <UserModal isOpen={isModalOpen} onClose={() => setIsModalOpen(false)} user={user} onLogout={handleLogout} /> : <LoginModal isOpen={isModalOpen} onClose={() => {}} />}
     </>
-  );
-}
-
-function UserModal({ isOpen, onClose, user, onLogout })
-{
-  return (
-    <Modal isOpen={isOpen} onClose={onClose}>
-      <div className="w-full flex justify-between items-center">
-        <h2 className="text-xl font-bold text-white h-full">Hey, {user?.displayName || 'User'}!</h2>
-        <button className="h-full bg-gray-800 p-2 rounded text-white flex justify-center items-center gap-1 cursor-pointer hover:bg-gray-700 transition-colors duration-300" onClick={onClose}>
-          <FiX className="text-2xl" />
-        </button>
-      </div>
-      <div className="mt-4">
-        <div className="bg-gray-800 w-full p-2 mt-1 rounded text-white font-semibold cursor-pointer flex items-center justify-start hover:bg-gray-950 transition-colors duration-300" onClick={onLogout}>
-          <FiMap className="text-lg mr-2"/>
-          <p>My Maps</p>
-        </div>
-        <div className="bg-gray-800 w-full p-2 mt-1 rounded text-white font-semibold cursor-pointer flex items-center justify-start hover:bg-gray-950 transition-colors duration-300" onClick={onLogout}>
-          <FiDollarSign className="text-lg mr-2"/>
-          <p>Credits</p>
-        </div>
-        <div className="bg-red-800 w-full p-2 mt-1 rounded text-white font-semibold cursor-pointer flex items-center justify-start hover:bg-red-950 transition-colors duration-300" onClick={onLogout}>
-          <FiLogOut className="text-lg mr-2"/>
-          <p>Logout</p>
-        </div>
-      </div>
-    </Modal>
-    );
-}
-
-function LoginModal({ isOpen, onClose }) 
-{
-  return (
-    <Modal isOpen={isOpen} onClose={onClose}>
-      <div className="w-full flex justify-between items-center">
-        <h2 className="text-xl font-bold text-center w-full text-white h-full">LOGIN TO USE</h2>
-      </div>
-      <LoginWithGoogle />
-    </Modal>
   );
 }
 
